@@ -54,10 +54,10 @@ class Detect(Thread):
         self.CAMERA.framerate = self.frame_rate
         RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
         log.info( '[+] Detect Thread running')
-        for frame in self.CAMERA.capture_continuous(RAW_CAPTURE, 
-                                                    format="bgr", 
-                                                    use_video_port=True,
-                                                    splitter_port=self.split_port):
+        while True:
+            frame = self.CAMERA.capture(RAW_CAPTURE, 
+                                        format="bgr", 
+                                        use_video_port=True):
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
             img = frame.array
