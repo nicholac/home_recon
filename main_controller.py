@@ -66,6 +66,8 @@ class hub(threading.Thread):
         '''
         #Init various threads
         self.stream_thread.start()
+        while not self.stream_thread._started.isSet():
+            sleep(0.2)
         log.info( '[+] Streaming thread running')
 
         self.detection_thread.start()

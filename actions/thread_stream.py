@@ -111,6 +111,7 @@ class Stream(Thread):
         super(Stream, self).__init__()
         #This signal is set when the machine wants your class to stop
         self._stopper = threading.Event()
+        self._started = threading.Event()
         #This signal says when the stop command has completed
         self._stop_complete = threading.Event()
         #Parsed data - see above
@@ -148,6 +149,7 @@ class Stream(Thread):
             address = (self.stream_host, self.stream_port)
             server = StreamingServer(address, StreamingHandler)
             server.serve_forever()
+            self._started.set()
             log.info( '[+] Stream Thread started')
         finally:
             self.CAMERA.stop_recording()
