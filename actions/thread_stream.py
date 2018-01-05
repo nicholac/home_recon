@@ -142,7 +142,7 @@ class Stream(Thread):
         if sys.platform.find('linux') == -1:
             return
         output = StreamingOutput()
-        self.CAMERA.start_recording(output, splitter_port=self.split_port, format='mjpeg')
+        self.CAMERA.start_recording(output, format='mjpeg')
         try:
             address = (self.stream_host, self.stream_port)
             sh = StreamingHandler(output)
