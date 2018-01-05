@@ -49,7 +49,7 @@ class hub(threading.Thread):
         #Camera Warmup
         sleep(2.0)
         self.detect_port = 2
-        self.stream_port = 4
+        self.stream_port = 1
 
         #Threads
         self.detection_thread = Detect(self.CAMERA, self.detect_port)
