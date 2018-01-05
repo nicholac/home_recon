@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 from time import sleep, time
 import threading
@@ -6,10 +7,14 @@ from threading import Thread
 
 import numpy as np
 import cv2
-from picamera.array import PiRGBArray
-from picamera import PiCamera
 
 from support_funcs.logger import log
+
+#Switch for dev / testing beyond Pi
+if sys.platform.find('linux') != -1:
+    from picamera.array import PiRGBArray
+else:
+    from tests.pi_camera_mock import PiRGBArray
 
 #Rename this class to what your shell script does - no spaces, special chars - use CaMaL casing
 class Detect(Thread):
@@ -23,7 +28,7 @@ class Detect(Thread):
         #Rename the super(THIS Classname) to the name of your class
         super(Detect, self).__init__()
         #This signal is set when the machine wants your class to stop
-        self._stop = threading.Event()
+        self._stopper = threading.Event()
         #This signal says when the stop command has completed
         self._stop_complete = threading.Event()
         #Parsed data - see above
@@ -34,8 +39,8 @@ class Detect(Thread):
         log.info('[+] Detect thread initialised')
 
 
-    def stop(self):
-        self._stop.set()
+    def stopit(self):
+        self._stopper.set()
     
     
     def stopped(self):
@@ -58,8 +63,8 @@ class Detect(Thread):
             img = frame.array
             print (img.shape)
             sleep(0.5)
-            if self._stop.is_set() == True:
-                self.join()
-            
+            if self._stopper.is_set() == True:
+                break
+        self._stop_complete.is_set() == True
         log.info( '[+] Detect Thread exited run loop')
 

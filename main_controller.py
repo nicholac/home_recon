@@ -11,6 +11,13 @@ from threading import Thread
 from support_funcs.logger import log
 from actions.thread_detect import Detect
 
+#Switch for dev / testing beyond Pi
+if sys.platform.find('linux') != -1:
+    from picamera.array import PiRGBArray
+    from picamera import PiCamera
+else:
+    from tests.pi_camera_mock import PiCamera, PiRGBArray
+
 
 class hub(threading.Thread):
     '''
@@ -22,7 +29,7 @@ class hub(threading.Thread):
         '''
         threading.Thread.__init__(self)
         self.running = False
-        self._stop = threading.Event()
+        self._stopper = threading.Event()
         self._stopped = threading.Event()
         #Store Initialisation parameters
         self.initParams = initParams
@@ -59,13 +66,15 @@ class hub(threading.Thread):
         log.info( '[+] Main controller running')
             
     
-    def stop(self):
+    def stopit(self):
         '''
         Main controller shutdown sequence
         '''
         #Shutdown various threads...
         #Shutdown main controller loop
-        self._stop.set()
+        self.detection_thread.stopit()
+        while not self.detection_thread.stopped:
+            sleep(0.1)
         log.info( '[+] Completed Shutdown')
         self._stopped.set()
         return True
@@ -88,9 +97,8 @@ if __name__ == '__main__':
     
     except KeyboardInterrupt:
         print ('[+] Caught Ctrl-C - Stopping')
-        #mainThread.join()
+        mainThread.stopit()
         print ('[+] Shutdown Complete.')
-        sys.exit()
 
     #except Exception:
     #    exc_type, exc_value, exc_traceback = sys.exc_info()
