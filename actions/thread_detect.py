@@ -22,7 +22,7 @@ class Detect(Thread):
     What does it do?
     '''
 
-    def __init__(self, CAMERA, split_port, capture_res=(800,600), frame_rate=24):
+    def __init__(self, CAMERA):
         '''
         '''
         #Rename the super(THIS Classname) to the name of your class
@@ -33,9 +33,7 @@ class Detect(Thread):
         self._stop_complete = threading.Event()
         #Parsed data - see above
         self.CAMERA = CAMERA
-        self.split_port = split_port
-        self.capture_res = capture_res
-        self.frame_rate = frame_rate
+        self.rounded_res = self.round_res(self.CAMERA.resolution)
         log.info('[+] Detect thread initialised')
 
 
@@ -53,10 +51,10 @@ class Detect(Thread):
         log.info( '[+] Detect Thread running')
         while True:
             #TODO: Rounding needs to be worked out automatically
-            frame = np.empty((608 * 800 * 3,), dtype=np.uint8)
+            frame = np.empty((self.rounded_res[1] * self.rounded_res[0] * 3,), dtype=np.uint8)
             self.CAMERA.capture(frame, 'bgr', use_video_port=True)
-            frame = frame.reshape((608, 800, 3))
-            frame = frame[:600, :800, :]
+            frame = frame.reshape((self.rounded_res[1], self.rounded_res[0], 3))
+            frame = frame[:self.CAMERA.resolution[1], :self.CAMERA.resolution[0], :]
             try:
                 print (frame.shape)
             except:
@@ -67,3 +65,9 @@ class Detect(Thread):
         self._stop_complete.is_set() == True
         log.info( '[+] Detect Thread exited run loop')
 
+
+    def round_res(self, res):
+        '''
+        Round the resolution to tha expected from the camera
+        '''
+        return (res[0]+(res[0]%32), res[1]+(res[1]%16))

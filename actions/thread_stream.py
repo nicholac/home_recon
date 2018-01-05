@@ -102,8 +102,7 @@ class Stream(Thread):
     What does it do?
     '''
 
-    def __init__(self, CAMERA, split_port, 
-                 capture_res=(800,600), frame_rate=24,
+    def __init__(self, CAMERA,
                  stream_port=8000, stream_host='10.8.0.6'):
         '''
         '''
@@ -116,9 +115,6 @@ class Stream(Thread):
         self._stop_complete = threading.Event()
         #Parsed data - see above
         self.CAMERA = CAMERA
-        self.split_port = split_port
-        self.capture_res = capture_res
-        self.frame_rate = frame_rate
         self.stream_port = stream_port
         self.stream_host = stream_host
         log.info('[+] Streaming thread initialised')
