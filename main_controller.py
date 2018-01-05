@@ -47,7 +47,7 @@ class hub(threading.Thread):
         #PI Camera 
         self.CAMERA = PiCamera()
         #Camera Warmup
-        time.sleep(2.0)
+        sleep(2.0)
         self.detect_port = 2
         self.stream_port = 1
 

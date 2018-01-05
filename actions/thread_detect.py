@@ -63,6 +63,8 @@ class Detect(Thread):
             img = frame.array
             print (img.shape)
             sleep(0.5)
+            # clear the stream in preparation for the next frame
+            RAW_CAPTURE.truncate(0)
             if self._stopper.is_set() == True:
                 break
         self._stop_complete.is_set() == True
