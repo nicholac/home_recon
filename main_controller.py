@@ -53,8 +53,8 @@ class hub(threading.Thread):
 
         #Threads
         self.detection_thread = Detect(self.CAMERA, self.detect_port)
-        #self.stream_thread = Stream(self.CAMERA, self.stream_port)
-        #self.stream_thread.isDaemon()
+        self.stream_thread = Stream(self.CAMERA)
+        self.stream_thread.isDaemon()
         
         log.info( '[+] Finished setting up modules, ready to start')
     
@@ -68,7 +68,7 @@ class hub(threading.Thread):
         self.detection_thread.start()
         log.info( '[+] Detection thread running')
 
-        #self.stream_thread.start()
+        self.stream_thread.start()
         log.info( '[+] Streaming thread running')
 
         log.info( '[+] Main controller completed startup')
