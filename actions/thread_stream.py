@@ -141,7 +141,8 @@ class Stream(Thread):
         #Linux testing 
         if sys.platform.find('linux') == -1:
             return
-        global output = StreamingOutput()
+        global output
+        output = StreamingOutput()
         self.CAMERA.start_recording(output, format='mjpeg')
         try:
             address = (self.stream_host, self.stream_port)
