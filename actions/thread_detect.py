@@ -53,20 +53,19 @@ class Detect(Thread):
         RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
         log.info( '[+] Detect Thread running')
         while True:
-            frame = self.CAMERA.capture(RAW_CAPTURE, 
-                                        format="bgr", 
-                                        use_video_port=True)
+            frame = np.empty((800 * 600 * 3,), dtype=np.uint8)
+            self.CAMERA.capture(frame, 'bgr', use_video_port=True)
+            frame = frame.reshape((600, 800, 3))
             #self.CAMERA.capture('foo.jpg', use_video_port=True)
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
             try:
-                img = frame.array
-                print (img.shape)
+                print (frame.shape)
             except:
                 print ('no frame')
             sleep(0.5)
             # clear the stream in preparation for the next frame
-            RAW_CAPTURE.truncate(0)
+            #RAW_CAPTURE.truncate(0)
             if self._stopper.is_set() == True:
                 break
         self._stop_complete.is_set() == True
