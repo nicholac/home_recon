@@ -59,8 +59,11 @@ class Detect(Thread):
             #self.CAMERA.capture('foo.jpg', use_video_port=True)
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
-            img = frame.array
-            print (img.shape)
+            try:
+                img = frame.array
+                print (img.shape)
+            except:
+                print ('no frame')
             sleep(0.5)
             # clear the stream in preparation for the next frame
             RAW_CAPTURE.truncate(0)
