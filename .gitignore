@@ -102,3 +102,7 @@ ENV/
 
 .pydevproject
 .project
+.vscode
+
+#logs
+*.log
