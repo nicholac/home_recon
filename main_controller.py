@@ -10,6 +10,7 @@ from threading import Thread
 #Home Recon
 from support_funcs.logger import log
 from actions.thread_detect import Detect
+from actions.thread_stream import Stream
 
 #Switch for dev / testing beyond Pi
 if sys.platform.find('linux') != -1:
@@ -50,7 +51,8 @@ class hub(threading.Thread):
 
         #Threads
         self.detection_thread = Detect(self.CAMERA, self.detect_port)
-        self.stream_thread = None
+        self.stream_thread = Stream(self.CAMERA, self.stream_port)
+        self.stream_thread.isDaemon()
         
         log.info( '[+] Finished setting up modules, ready to start')
     
@@ -62,8 +64,12 @@ class hub(threading.Thread):
         '''
         #Init various threads
         self.detection_thread.start()
+        log.info( '[+] Detection thread running')
+        
+        self.stream_thread.start()
+        log.info( '[+] Streaming thread running')
 
-        log.info( '[+] Main controller running')
+        log.info( '[+] Main controller completed startup')
             
     
     def stopit(self):
