@@ -32,6 +32,8 @@ PAGE="""\
 </body>
 </html>
 """
+
+output = None
         
 
 class StreamingOutput(object):
