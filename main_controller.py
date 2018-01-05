@@ -46,6 +46,8 @@ class hub(threading.Thread):
         
         #PI Camera 
         self.CAMERA = PiCamera()
+        #Camera Warmup
+        time.sleep(2.0)
         self.detect_port = 2
         self.stream_port = 1
 
@@ -65,7 +67,7 @@ class hub(threading.Thread):
         #Init various threads
         self.detection_thread.start()
         log.info( '[+] Detection thread running')
-        
+
         self.stream_thread.start()
         log.info( '[+] Streaming thread running')
 
