@@ -56,7 +56,8 @@ class Detect(Thread):
         log.info( '[+] Detect Thread running')
         for frame in self.CAMERA.capture_continuous(RAW_CAPTURE, 
                                                     format="bgr", 
-                                                    use_video_port=True):
+                                                    use_video_port=True,
+                                                    splitter_port=self.split_port):
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
             img = frame.array

@@ -52,7 +52,7 @@ class hub(threading.Thread):
         self.stream_port = 1
 
         #Threads
-        #self.detection_thread = Detect(self.CAMERA, self.detect_port)
+        self.detection_thread = Detect(self.CAMERA, self.detect_port)
         self.stream_thread = Stream(self.CAMERA, self.stream_port)
         self.stream_thread.isDaemon()
         
@@ -68,7 +68,7 @@ class hub(threading.Thread):
         self.stream_thread.start()
         log.info( '[+] Streaming thread running')
 
-        #self.detection_thread.start()
+        self.detection_thread.start()
         log.info( '[+] Detection thread running')
 
 
