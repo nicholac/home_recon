@@ -50,22 +50,22 @@ class Detect(Thread):
     def run(self):
         '''
         '''
-        self.CAMERA.resolution = self.capture_res
-        self.CAMERA.framerate = self.frame_rate
-        RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
+        #self.CAMERA.resolution = self.capture_res
+        #self.CAMERA.framerate = self.frame_rate
+        #RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
         log.info( '[+] Detect Thread running')
         while True:
             #frame = self.CAMERA.capture(RAW_CAPTURE, 
             #                            format="bgr", 
             #                            use_video_port=True)
-            camera.capture('foo.jpg', use_video_port=True)
+            self.CAMERA.capture('foo.jpg', use_video_port=True)
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
-            img = frame.array
-            print (img.shape)
+            #img = frame.array
+            #print (img.shape)
             sleep(0.5)
             # clear the stream in preparation for the next frame
-            RAW_CAPTURE.truncate(0)
+            #RAW_CAPTURE.truncate(0)
             if self._stopper.is_set() == True:
                 break
         self._stop_complete.is_set() == True
