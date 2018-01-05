@@ -143,7 +143,7 @@ class Stream(Thread):
             return
         with self.CAMERA() as camera:
             output = StreamingOutput()
-            camera.start_recording(output, format='mjpeg')
+            camera.start_recording(output, splitter_port=self.split_port, format='mjpeg')
             try:
                 address = (self.stream_host, self.stream_port)
                 sh = StreamingHandler(output)
