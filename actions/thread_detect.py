@@ -57,7 +57,7 @@ class Detect(Thread):
         while True:
             frame = self.CAMERA.capture(RAW_CAPTURE, 
                                         format="bgr", 
-                                        use_video_port=True):
+                                        use_video_port=True)
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
             img = frame.array
