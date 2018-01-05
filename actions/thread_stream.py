@@ -52,8 +52,6 @@ class StreamingOutput(object):
         return self.buffer.write(buf)
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
-    def __init__(self, output):
-        self.output = output
     def do_GET(self):
         if self.path == '/':
             self.send_response(301)
@@ -75,9 +73,9 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.end_headers()
             try:
                 while True:
-                    with self.output.condition:
-                        self.output.condition.wait()
-                        frame = self.output.frame
+                    with output.condition:
+                        output.condition.wait()
+                        frame = output.frame
                     self.wfile.write(b'--FRAME\r\n')
                     self.send_header('Content-Type', 'image/jpeg')
                     self.send_header('Content-Length', len(frame))
@@ -145,8 +143,7 @@ class Stream(Thread):
         self.CAMERA.start_recording(output, format='mjpeg')
         try:
             address = (self.stream_host, self.stream_port)
-            sh = StreamingHandler(output)
-            server = StreamingServer(address, sh)
+            server = StreamingServer(address, StreamingHandler)
             server.serve_forever()
             log.info( '[+] Stream Thread started')
         finally:
