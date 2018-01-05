@@ -90,7 +90,7 @@ class hub(threading.Thread):
         self.detection_thread.stopit()
         while not self.detection_thread.stopped:
             sleep(0.1)
-        self.stream_thread.join()
+        self.stream_thread.stop()
         log.info( '[+] Completed Shutdown')
         self._stopped.set()
         return True
