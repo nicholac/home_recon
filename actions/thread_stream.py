@@ -141,14 +141,13 @@ class Stream(Thread):
         #Linux testing 
         if sys.platform.find('linux') == -1:
             return
-        with self.CAMERA() as camera:
-            output = StreamingOutput()
-            camera.start_recording(output, splitter_port=self.split_port, format='mjpeg')
-            try:
-                address = (self.stream_host, self.stream_port)
-                sh = StreamingHandler(output)
-                server = StreamingServer(address, sh)
-                server.serve_forever()
-                log.info( '[+] Stream Thread started')
-            finally:
-                camera.stop_recording()
+        output = StreamingOutput()
+        self.CAMERA.start_recording(output, splitter_port=self.split_port, format='mjpeg')
+        try:
+            address = (self.stream_host, self.stream_port)
+            sh = StreamingHandler(output)
+            server = StreamingServer(address, sh)
+            server.serve_forever()
+            log.info( '[+] Stream Thread started')
+        finally:
+            self.CAMERA.stop_recording()
