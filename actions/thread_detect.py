@@ -50,8 +50,6 @@ class Detect(Thread):
     def run(self):
         '''
         '''
-        #self.CAMERA.resolution = self.capture_res
-        #self.CAMERA.framerate = self.frame_rate
         RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
         log.info( '[+] Detect Thread running')
         while True:
@@ -65,7 +63,7 @@ class Detect(Thread):
             print (img.shape)
             sleep(0.5)
             # clear the stream in preparation for the next frame
-            #RAW_CAPTURE.truncate(0)
+            RAW_CAPTURE.truncate(0)
             if self._stopper.is_set() == True:
                 break
         self._stop_complete.is_set() == True

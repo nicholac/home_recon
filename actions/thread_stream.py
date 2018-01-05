@@ -135,9 +135,6 @@ class Stream(Thread):
     def run(self):
         '''
         '''
-        self.CAMERA.resolution = self.capture_res
-        self.CAMERA.framerate = self.frame_rate
-        RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
         log.info( '[+] Stream Thread starting')
         #Linux testing 
         if sys.platform.find('linux') == -1:

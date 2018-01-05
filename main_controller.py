@@ -46,6 +46,8 @@ class hub(threading.Thread):
         
         #PI Camera 
         self.CAMERA = PiCamera()
+        self.CAMERA.resolution = (800, 600)
+        self.CAMERA.framerate = 24
         #Camera Warmup
         sleep(2.0)
         self.detect_port = 2
