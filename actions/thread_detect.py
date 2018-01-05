@@ -53,7 +53,7 @@ class Detect(Thread):
         RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
         log.info( '[+] Detect Thread running')
         while True:
-            frame = np.empty((600, 800, 3,), dtype=np.uint8)
+            frame = np.empty((608, 800, 3,), dtype=np.uint8)
             self.CAMERA.capture(frame, 'rgb', use_video_port=True)
             #self.CAMERA.capture('foo.jpg', use_video_port=True)
             # grab the raw NumPy array representing the image, then initialize the timestamp
