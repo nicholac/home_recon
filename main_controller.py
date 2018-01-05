@@ -49,11 +49,11 @@ class hub(threading.Thread):
         #Camera Warmup
         sleep(2.0)
         self.detect_port = 2
-        self.stream_port = 1
+        self.stream_port = 4
 
         #Threads
         self.detection_thread = Detect(self.CAMERA, self.detect_port)
-        self.stream_thread = Stream(self.CAMERA)
+        self.stream_thread = Stream(self.CAMERA, self.stream_port)
         self.stream_thread.isDaemon()
         
         log.info( '[+] Finished setting up modules, ready to start')
