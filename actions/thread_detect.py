@@ -1,0 +1,65 @@
+import os
+import subprocess
+from time import sleep, time
+import threading
+from threading import Thread
+
+import numpy as np
+import cv2
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+
+from support_funcs.logger import log
+
+#Rename this class to what your shell script does - no spaces, special chars - use CaMaL casing
+class Detect(Thread):
+    '''
+    What does it do?
+    '''
+
+    def __init__(self, CAMERA, split_port, capture_res=(800,600), frame_rate=24):
+        '''
+        '''
+        #Rename the super(THIS Classname) to the name of your class
+        super(Detect, self).__init__()
+        #This signal is set when the machine wants your class to stop
+        self._stop = threading.Event()
+        #This signal says when the stop command has completed
+        self._stop_complete = threading.Event()
+        #Parsed data - see above
+        self.CAMERA = CAMERA
+        self.split_port = split_port
+        self.capture_res = capture_res
+        self.frame_rate = frame_rate
+        log.info('[+] Detect thread initialised')
+
+
+    def stop(self):
+        self._stop.set()
+    
+    
+    def stopped(self):
+        return self._stop_complete.is_set()
+
+
+    def run(self):
+        '''
+        '''
+        self.CAMERA.resolution = self.capture_res
+        self.CAMERA.framerate = self.frame_rate
+        RAW_CAPTURE = PiRGBArray(self.CAMERA, size=self.capture_res)
+        log.info( '[+] Detect Thread running')
+        for frame in self.CAMERA.capture_continuous(RAW_CAPTURE, 
+                                                    format="bgr", 
+                                                    use_video_port=True,
+                                                    splitter_port=self.split_port):
+            # grab the raw NumPy array representing the image, then initialize the timestamp
+            # and occupied/unoccupied text
+            img = frame.array
+            print (img.shape)
+            sleep(0.5)
+            if self._stop.is_set() == True:
+                self.join()
+            
+        log.info( '[+] Detect Thread exited run loop')
+
