@@ -65,11 +65,12 @@ class hub(threading.Thread):
         The main controller loop
         '''
         #Init various threads
+        self.stream_thread.start()
+        log.info( '[+] Streaming thread running')
+
         self.detection_thread.start()
         log.info( '[+] Detection thread running')
 
-        self.stream_thread.start()
-        log.info( '[+] Streaming thread running')
 
         log.info( '[+] Main controller completed startup')
             
