@@ -34,12 +34,12 @@ class hub(threading.Thread):
         self._stopper = threading.Event()
         self._stopped = threading.Event()
         #Load config path
-        #try:
-        with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json'), 'rb') as fp:
-            self.config = json.load(fp)
-        #except Exception:
-        #    print ('Fatal Error - Failed to load config.json')
-        #    return None
+        try:
+            with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json'), 'r') as fp:
+                self.config = json.load(fp)
+        except Exception:
+            print ('Fatal Error - Failed to load config.json')
+            return None
         
         #PI Camera 
         self.CAMERA = PiCamera()
