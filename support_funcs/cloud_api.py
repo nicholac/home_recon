@@ -29,7 +29,7 @@ def submit_detection(endpoint, frame, unit_id, dtg,
     #try:
     data = {'dtg': dtg, 'unit_id':unit_id, 
             'comments':comments, 'num_people':num_people}
-    files = {'image':open(os.path.join(TMP_PATH, fname))}
+    files = {'image':open(os.path.join(TMP_PATH, fname), 'rb')}
     res = requests.post(endpoint, data=data, files=files)
     assert(res.status_code == 201)
     #Remove temp file
