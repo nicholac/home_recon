@@ -26,19 +26,19 @@ def submit_detection(endpoint, frame, unit_id, dtg,
         exc_info = (type(exc), exc, exc.__traceback__)
         log.debug('Failed to save image to temp %s/%s, %s', TMP_PATH, fname, exc_info)
         return 500
-    try:
-        data = {'dtg': dtg, 'unit_id':unit_id, 
-                'comments':comments, 'num_people':num_people}
-        files = {'image':open(os.path.join(TMP_PATH, fname))}
-        res = requests.post(endpoint, data=data, files=files)
-        assert(res.status_code == 201)
-        #Remove temp file
-        os.remove(os.path.join(TMP_PATH, fname))
-        log.debug('Submitted a detection, status:%s, result:%s', res.status_code, res.text)
-        return res.status_code
-    except Exception:
-        log.debug('Failed to submit a detection, status:%s, result:%s', res.status_code, res.text)
-        return res.status_code
+    #try:
+    data = {'dtg': dtg, 'unit_id':unit_id, 
+            'comments':comments, 'num_people':num_people}
+    files = {'image':open(os.path.join(TMP_PATH, fname))}
+    res = requests.post(endpoint, data=data, files=files)
+    assert(res.status_code == 201)
+    #Remove temp file
+    os.remove(os.path.join(TMP_PATH, fname))
+    log.debug('Submitted a detection, status:%s, result:%s', res.status_code, res.text)
+    return res.status_code
+    #except Exception:
+    #    log.debug('Failed to submit a detection, status:%s, result:%s', res.status_code, res.text)
+    #    return res.status_code
         
 
 def gen_hash():
