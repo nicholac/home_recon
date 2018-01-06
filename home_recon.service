@@ -1,0 +1,12 @@
+[Unit]
+Description=Home_Recon
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/.virtualenvs/cv/bin/python /home/pi/code/home_recon/main_controller.py
+Restart=on-abort
+User=pi
+
+[Install]
+WantedBy=multi-user.target
