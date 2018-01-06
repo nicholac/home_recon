@@ -47,10 +47,10 @@ class Detect(Thread):
         self.config = config
         #Mobile net dnn
         self.net = cv2.dnn.readNetFromCaffe(os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                            '..', 'models', ssd_mobilenet_object_detection,
+                                            '..', 'models', 'ssd_mobilenet_object_detection',
                                             self.config['detect']['mobile_net']['model']), 
                                             os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                            '..', 'models', ssd_mobilenet_object_detection,
+                                            '..', 'models', 'ssd_mobilenet_object_detection',
                                             self.config['detect']['mobile_net']['weights']))
         self.net_swap_rb = False
         self.net_classNames = { 0: 'background',
