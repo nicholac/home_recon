@@ -55,8 +55,7 @@ class hub(threading.Thread):
                                        self.config)
 
         self.stream_thread = Stream(self.CAMERA, 
-                                    self.config["stream"]["port"], 
-                                    self.config["stream"]["host"])
+                                    self.config)
         self.stream_thread.isDaemon()
         
         log.info( '[+] Finished setting up modules, ready to start')
@@ -103,7 +102,7 @@ class hub(threading.Thread):
 if __name__ == '__main__':
     try:
         initParams = {'config':'testing'}
-        mainThread = hub(initParams)
+        mainThread = hub()
         #Run a while and stop
         print ('[+] Starting Home Recon in '+str.upper(initParams['config'])+' mode...')
         start = time()

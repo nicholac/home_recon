@@ -114,6 +114,7 @@ class Stream(Thread):
         self._stop_complete = threading.Event()
         #Parsed data - see above
         self.CAMERA = CAMERA
+        self.config = config
         self.stream_port = self.config["stream"]["port"], 
         self.stream_host = self.config["stream"]["host"]
         log.info('[+] Streaming thread initialised')
