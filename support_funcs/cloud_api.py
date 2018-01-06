@@ -31,7 +31,7 @@ def submit_detection(endpoint, frame, unit_id, dtg,
             'comments':comments, 'num_people':num_people}
     files = {'image':open(os.path.join(TMP_PATH, fname), 'rb')}
     res = requests.post(endpoint, data=data, files=files)
-    assert(res.status_code == 201)
+    #assert(res.status_code == 201)
     #Remove temp file
     os.remove(os.path.join(TMP_PATH, fname))
     log.debug('Submitted a detection, status:%s, result:%s', res.status_code, res.text)
