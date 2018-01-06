@@ -99,7 +99,7 @@ class Detect(Thread):
         people = self.UPPER_BODY_CASCADE.detectMultiScale(grey_frame, 
                                                           self.config['detect']['_scale'], 
                                                           self.config['detect']['_range'])
-        log.info('People Detected:{}'.format(len(people)))
+        log.debug('People Detected:{}'.format(len(people)))
         if len(people) > 0:
             for (x,y,w,h) in people:
                 cv2.rectangle(bgr_frame,(x,y),(x+w,y+h),(255,0,0),2)
