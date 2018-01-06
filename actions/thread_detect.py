@@ -85,7 +85,7 @@ class Detect(Thread):
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 #num_people, out_img = self.detect_people(gray, frame)
                 #if num_people > 0 and time()-start > self.config['detect']['_throttle']:
-                num_dets, out_img = detect_people_dnn(frame)
+                num_dets, out_img = self.detect_people_dnn(frame)
                 if out_img and time()-start > self.config['detect']['_throttle']:
                     log.info( '[+] Detect Thread found some valid objects: %s', num_dets)
                     #Submit the detection
