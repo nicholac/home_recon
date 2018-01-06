@@ -182,9 +182,9 @@ class Detect(Thread):
 
                 cv2.rectangle(frame, (xLeftBottom, yLeftBottom), (xRightTop, yRightTop),
                                 (0, 255, 0))
-                if class_id in classNames and class_id in self.config['detect']['mobile_net_watchclasses']:
+                if class_id in self.net_classNames and class_id in self.config['detect']['mobile_net_watchclasses']:
                     num_valid_detections+=1
-                    label = classNames[class_id] + ": " + str(confidence)
+                    label = self.net_classNames[class_id] + ": " + str(confidence)
                     labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
 
                     yLeftBottom = max(yLeftBottom, labelSize[1])
