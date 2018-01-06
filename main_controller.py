@@ -87,7 +87,7 @@ class hub(threading.Thread):
         '''
         #Shutdown various threads...
         #Shutdown main controller loop
-        log.info( '[+] Shutting down threads...)
+        log.info( '[+] Shutting down threads...)')
         self.detection_thread.stopit()
         while not self.detection_thread.stopped:
             sleep(0.1)
