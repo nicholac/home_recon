@@ -148,8 +148,8 @@ class Detect(Thread):
                                      self.config['detect']['mobile_net']['meanVal'], 
                                      self.config['detect']['mobile_net']['meanVal']), 
                                      self.net_swap_rb)
-        net.setInput(blob)
-        detections = net.forward()
+        self.net.setInput(blob)
+        detections = self.net.forward()
 
         cols = frame.shape[1]
         rows = frame.shape[0]
