@@ -85,14 +85,15 @@ class Detect(Thread):
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 #num_people, out_img = self.detect_people(gray, frame)
                 #if num_people > 0 and time()-start > self.config['detect']['_throttle']:
-                num_dets, out_img = self.detect_people_dnn(frame)
+                num_dets, type_dets, out_img = self.detect_people_dnn(frame)
+                log.debug( '[+] Detect Thread objects: %s', num_dets)
                 if out_img and time()-start > self.config['detect']['_throttle']:
                     log.info( '[+] Detect Thread found some valid objects: %s', num_dets)
                     #Submit the detection
                     chk = submit_detection(self.config['global']['cloud_api_images'], 
                                             out_img, self.config['global']['unit_id'], 
                                             datetime.now().isoformat(), 
-                                            0, 'unverified')
+                                            0, type_dets)
                     #If we submitted successfully then reset the throttle
                     if chk == 201:
                         start = time()
@@ -170,6 +171,7 @@ class Detect(Thread):
 
         #Detections from classes we care about
         num_valid_detections = 0
+        type_detections = ''
         for i in range(detections.shape[2]):
             confidence = detections[0, 0, i, 2]
             if confidence > self.config['detect']['mobile_net_thresh']:
@@ -185,6 +187,7 @@ class Detect(Thread):
                 if class_id in self.net_classNames and class_id in self.config['detect']['mobile_net_watchclasses']:
                     num_valid_detections+=1
                     label = self.net_classNames[class_id] + ": " + str(confidence)
+                    type_detections.join(' label')
                     labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
 
                     yLeftBottom = max(yLeftBottom, labelSize[1])
@@ -194,9 +197,9 @@ class Detect(Thread):
                     cv2.putText(frame, label, (xLeftBottom, yLeftBottom),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0))
         if num_valid_detections > 0:
-            return num_valid_detections, frame
+            return num_valid_detections, type_detections, frame
         else:
-            return 0, None
+            return 0, '', None
 
 
 
