@@ -21,7 +21,7 @@
             "weights" : "MobileNetSSD_train.caffemodel"
         },
         "mobile_net_thresh": 0.7,
-        "mobile_net_watchclasses":[8, 12, 15]
+        "mobile_net_watchclasses":[8, 12, 15, 9]
     },
     "stream":{
         "host": "10.8.0.6",
