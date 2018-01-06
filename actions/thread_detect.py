@@ -87,7 +87,7 @@ class Detect(Thread):
                 #if num_people > 0 and time()-start > self.config['detect']['_throttle']:
                 num_dets, type_dets, out_img = self.detect_people_dnn(frame)
                 log.debug( '[+] Detect Thread objects: %s', num_dets)
-                if out_img and time()-start > self.config['detect']['_throttle']:
+                if num_dets > 0 and time()-start > self.config['detect']['_throttle']:
                     log.info( '[+] Detect Thread found some valid objects: %s', num_dets)
                     #Submit the detection
                     chk = submit_detection(self.config['global']['cloud_api_images'], 
