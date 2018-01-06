@@ -1,7 +1,7 @@
 {
     "global": {
         "resolution": [800, 600],
-        "framerate": 24,
+        "framerate": 5,
         "cloud_host": "10.8.0.1",
         "cloud_api_images": "http://10.8.0.1:5000/home_recon",
         "unit_id": "rpi3"
@@ -9,7 +9,19 @@
     "detect":{
         "_scale": 1.3,
         "_range": 5,
-        "throttle": 10
+        "throttle": 10,
+        "motion_thresh": 5000,
+        "mobile_net": {
+            "inWidth" : 300,
+            "inHeight" : 300,
+            "WHRatio" : 1.0,
+            "inScaleFactor" : 0.007843,
+            "meanVal" : 127.5,
+            "model" : "MobileNetSSD_300x300.prototxt",
+            "weights" : "MobileNetSSD_train.caffemodel"
+        },
+        "mobile_net_thresh": 0.7,
+        "mobile_net_watchclasses":[8, 12, 15]
     },
     "stream":{
         "host": "10.8.0.6",
